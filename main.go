@@ -4,10 +4,10 @@ import (
 	"UBStoYNAB/csvExport"
 	"UBStoYNAB/ubsApi"
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
-	"encoding/json"
 )
 
 func main() {
@@ -90,5 +90,5 @@ func loadConfiguration() Configuration {
 }
 
 type Configuration struct {
-	ContractNumber   string
+	ContractNumber string
 }

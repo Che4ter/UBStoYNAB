@@ -151,13 +151,13 @@ type CreditCardOverviewRequest struct {
 }
 
 type CreditCardOverviewResponse struct {
-	HasMoreRecords     string `json:"hasMoreRecords"`
-	HasDebitCard       bool   `json:"hasDebitCard"`
-	NewUnseenInvoices  int    `json:"newUnseenInvoices"`
-	UnpaidInvoices     int    `json:"unpaidInvoices"`
+	HasMoreRecords     string               `json:"hasMoreRecords"`
+	HasDebitCard       bool                 `json:"hasDebitCard"`
+	NewUnseenInvoices  int                  `json:"newUnseenInvoices"`
+	UnpaidInvoices     int                  `json:"unpaidInvoices"`
 	CreditCardAccounts []CreditCardAccounts `json:"creditCardAccounts"`
-	Status    string `json:"status"`
-	Timestamp string `json:"timestamp"`
+	Status             string               `json:"status"`
+	Timestamp          string               `json:"timestamp"`
 }
 
 type CreditCardAccounts struct {
@@ -223,8 +223,8 @@ type CreditCardDetailsResponse struct {
 		} `json:"shuffledIconElements"`
 	} `json:"creditCardAccount"`
 	CreditCards []CreditCards `json:"creditCards"`
-	Status    string `json:"status"`
-	Timestamp string `json:"timestamp"`
+	Status      string        `json:"status"`
+	Timestamp   string        `json:"timestamp"`
 }
 
 type CreditCards struct {
@@ -269,28 +269,28 @@ type CreditCardTransactionsRequest struct {
 }
 
 type CreditCardTransactionsResponse struct {
-	NewUnseenInvoice    bool   `json:"newUnseenInvoice"`
-	PeriodStartDate     string `json:"periodStartDate"`
-	PeriodEndDate       string `json:"periodEndDate"`
-	ClosingBalance      string `json:"closingBalance"`
-	OpeningBalance      string `json:"openingBalance"`
-	CurrencyCd          string `json:"currencyCd"`
-	TotalCredits        string `json:"totalCredits"`
-	TotalDebits         string `json:"totalDebits"`
-	InvoiceAmount       string `json:"invoiceAmount"`
-	DocumentReferenceID string `json:"documentReferenceId"`
-	PaymentMethod       string `json:"paymentMethod"`
-	Ebill               bool   `json:"ebill"`
-	HasPdf              bool   `json:"hasPdf"`
-	PaymentAllowed      bool   `json:"paymentAllowed"`
-	AccountID           string `json:"accountId"`
-	InvoiceID           string `json:"invoiceId"`
-	AccountTransactions []CreditCardAccountTransactions `json:"accountTransactions"`
-	CardTransactions []CardTransactions `json:"cardTransactions"`
-	HasMoreAccountTransactions bool   `json:"hasMoreAccountTransactions"`
-	HasMoreCardTransactions    bool   `json:"hasMoreCardTransactions"`
-	Status                     string `json:"status"`
-	Timestamp                  string `json:"timestamp"`
+	NewUnseenInvoice           bool                            `json:"newUnseenInvoice"`
+	PeriodStartDate            string                          `json:"periodStartDate"`
+	PeriodEndDate              string                          `json:"periodEndDate"`
+	ClosingBalance             string                          `json:"closingBalance"`
+	OpeningBalance             string                          `json:"openingBalance"`
+	CurrencyCd                 string                          `json:"currencyCd"`
+	TotalCredits               string                          `json:"totalCredits"`
+	TotalDebits                string                          `json:"totalDebits"`
+	InvoiceAmount              string                          `json:"invoiceAmount"`
+	DocumentReferenceID        string                          `json:"documentReferenceId"`
+	PaymentMethod              string                          `json:"paymentMethod"`
+	Ebill                      bool                            `json:"ebill"`
+	HasPdf                     bool                            `json:"hasPdf"`
+	PaymentAllowed             bool                            `json:"paymentAllowed"`
+	AccountID                  string                          `json:"accountId"`
+	InvoiceID                  string                          `json:"invoiceId"`
+	AccountTransactions        []CreditCardAccountTransactions `json:"accountTransactions"`
+	CardTransactions           []CardTransactions              `json:"cardTransactions"`
+	HasMoreAccountTransactions bool                            `json:"hasMoreAccountTransactions"`
+	HasMoreCardTransactions    bool                            `json:"hasMoreCardTransactions"`
+	Status                     string                          `json:"status"`
+	Timestamp                  string                          `json:"timestamp"`
 }
 
 type CardTransactions struct {

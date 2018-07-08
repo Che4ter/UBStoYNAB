@@ -32,13 +32,13 @@ func initData(contractNumber string) {
 }
 
 //login
-func GetAuthenticatorChallenge(contractNumber string) (string){
+func GetAuthenticatorChallenge(contractNumber string) string {
 	initData(contractNumber)
 
 	requestURL := "/ClientWorkbenchSystem/MobileInterfaceFoundation/V1/MobileInterfaceFoundation/getNavigation/8.1.0/de?login"
 
 	client := &http.Client{
-		Jar:           UBSCookieJar,
+		Jar: UBSCookieJar,
 	}
 
 	v := url.Values{}
@@ -46,7 +46,7 @@ func GetAuthenticatorChallenge(contractNumber string) (string){
 	v.Set("isiwebuserid", USBContractNumber)
 	v.Set("isiwebargs", "login&language=de&_="+strconv.FormatInt(NowAsUnixMilli(), 10))
 
-	req, err := http.NewRequest("POST", BASE_URL + requestURL, bytes.NewBufferString(v.Encode()))
+	req, err := http.NewRequest("POST", BASE_URL+requestURL, bytes.NewBufferString(v.Encode()))
 	req.Header.Add("cookie", "NavLB_MOBS=mobs-ch1.ubs.com; bzelang=en-DE; Navajo=")
 	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 	if err != nil {
@@ -76,15 +76,15 @@ func GetAuthenticatorChallenge(contractNumber string) (string){
 
 	var challenge1, challenge2, challenge3 string
 	for _, element := range responseDTO.Gui.GuiElem {
-		if(element.Name == "errorcode" && element.Label != ""){
+		if element.Name == "errorcode" && element.Label != "" {
 			fmt.Println(element.Label)
 			os.Exit(-1)
 		}
 		if element.Name == "challenge1" {
 			challenge1 = element.Value
-		}else if element.Name == "challenge2" {
+		} else if element.Name == "challenge2" {
 			challenge2 = element.Value
-		}else if element.Name == "challenge3" {
+		} else if element.Name == "challenge3" {
 			challenge3 = element.Value
 		}
 	}
@@ -387,7 +387,6 @@ func GetCardTransactions(accountId string, numRecords int, startDate string, end
 
 	return creditCardTransactions, accountTransactions
 }
-
 
 //others
 func PingRequest(contractNumber string) {
