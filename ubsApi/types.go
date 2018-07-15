@@ -126,6 +126,8 @@ type CashAccountTrxes struct {
 	ValueDate              string   `json:"valueDate"`
 	TransactionTextList    []string `json:"transactionTextList,omitempty"`
 	PaymentInformationList []struct {
+		Amount          string   `json:"amount"`
+		Currency        string   `json:"currency"`
 		DescriptionList []string `json:"descriptionList"`
 	} `json:"paymentInformationList,omitempty"`
 	PaymentInstructionList []string `json:"paymentInstructionList,omitempty"`

@@ -52,6 +52,20 @@ func ExportNormalAccountToCSV(transactions []ubsApi.CashAccountTrxes, accountAli
 		} else if element.Description == "Zinsabschluss" {
 			payee = "UBS"
 			memo = "UBS Zinsabschluss"
+		} else if strings.Contains(element.Description, "Sammelauftrag"){
+			for _, subelement := range element.PaymentInformationList {
+				if strings.HasPrefix(subelement.Amount, "-") {
+					outflow = strings.Trim(subelement.Amount, "-")
+					inflow = ""
+				} else {
+					outflow = ""
+					inflow = subelement.Amount
+				}
+				memo = "Sammelauftrag, Währung: " + subelement.Currency
+				payee = subelement.DescriptionList[0]
+				data = append(data, []string{date, payee, memo, outflow, inflow})
+			}
+			continue
 		} else {
 			if len(element.TransactionTextList) > 0 {
 				if len(element.PaymentInformationList) > 0 && len(element.PaymentInformationList[0].DescriptionList) > 0 {
