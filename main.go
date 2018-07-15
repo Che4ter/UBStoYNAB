@@ -8,12 +8,16 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
 	fmt.Println("Starte UBS E-Banking crawler...")
 	config := loadConfiguration()
+
 	if login(config.ContractNumber) {
+		startDate := getStartDate()
+
 		//export normal accounts
 		accounts := ubsApi.GetAvailableAccounts()
 		for index, element := range accounts {
@@ -22,7 +26,7 @@ func main() {
 			fmt.Println("Balance: ", element.Balance)
 			fmt.Println("Try to export transactions")
 
-			csvExport.ExportNormalAccountToCSV(ubsApi.GetAccountTransactions(element.ID, 350, "20180101"), element.Alias)
+			csvExport.ExportNormalAccountToCSV(ubsApi.GetAccountTransactions(element.ID, 350, startDate), element.Alias)
 		}
 
 		//export credit cards
@@ -37,8 +41,8 @@ func main() {
 				fmt.Println("-->Card ", index)
 				fmt.Println("-->Alias: ", card.ProductText)
 
-				fmt.Println("Try to export transactions")
-				cardTransactions, accountTransactions := ubsApi.GetCardTransactions(card.ID, 150, "20180301", "20180707")
+				fmt.Println("Versuche die Transaktionen zu exportieren...")
+				cardTransactions, accountTransactions := ubsApi.GetCardTransactions(card.ID, 150, startDate, time.Now().Format("20060102"))
 				csvExport.ExportCreditCardToCSV(cardTransactions, accountTransactions, card.Alias)
 			}
 		}
@@ -57,6 +61,21 @@ func login(contractNumber string) bool {
 	}
 	fmt.Println("Warnung: Zu viele falsche Anmeldeversuche können zu einer vorübergehenden Sperrung des E-Bankings führen.")
 	return false
+}
+
+func getStartDate() string {
+
+	fmt.Println("Eingabe - Start Datum(dd.mm.yyyy)")
+	for {
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		responses, err := time.Parse("02.01.2006",scanner.Text())
+		if  err != nil{
+			fmt.Println("Error: Ungültiges datum")
+		} else {
+			return  responses.Format("20060102")
+		}
+	}
 }
 
 func getChallengeInput(challenge string) []string {
