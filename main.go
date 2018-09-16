@@ -26,7 +26,8 @@ func main() {
 			fmt.Println("Balance: ", element.Balance)
 			fmt.Println("Try to export transactions")
 
-			csvExport.ExportNormalAccountToCSV(ubsApi.GetAccountTransactions(element.ID, 350, startDate), element.Alias)
+			endDate := time.Now().Local().AddDate(0, 0, -3)
+			csvExport.ExportNormalAccountToCSV(ubsApi.GetAccountTransactions(element.ID, 350, startDate, endDate.Format("20060102")), element.Alias)
 		}
 
 		//export credit cards
@@ -42,7 +43,7 @@ func main() {
 				fmt.Println("-->Alias: ", card.ProductText)
 
 				fmt.Println("Versuche die Transaktionen zu exportieren...")
-				cardTransactions, accountTransactions := ubsApi.GetCardTransactions(card.ID, 150, startDate, time.Now().Format("20060102"))
+				cardTransactions, accountTransactions := ubsApi.GetCardTransactions(card.ID, 150, startDate, time.Now().Local().AddDate(0, 0, -3).Format("20060102"))
 				csvExport.ExportCreditCardToCSV(cardTransactions, accountTransactions, card.Alias)
 			}
 		}

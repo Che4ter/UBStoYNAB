@@ -33,6 +33,8 @@ func ExportNormalAccountToCSV(transactions []ubsApi.CashAccountTrxes, accountAli
 				}
 			} else if element.TransactionTextList[0] == "Zahlung Maestro" && len(element.TransactionTextList) > 1 {
 				payee = element.TransactionTextList[1]
+			} else if element.TransactionTextList[0] == "Zahlung V PAY" && len(element.TransactionTextList) > 1 {
+				payee = element.TransactionTextList[1]
 			} else {
 				payee = strings.Join(element.TransactionTextList, ", ")
 			}
@@ -52,7 +54,7 @@ func ExportNormalAccountToCSV(transactions []ubsApi.CashAccountTrxes, accountAli
 		} else if element.Description == "Zinsabschluss" {
 			payee = "UBS"
 			memo = "UBS Zinsabschluss"
-		} else if strings.Contains(element.Description, "Sammelauftrag"){
+		} else if strings.Contains(element.Description, "Sammelauftrag") {
 			for _, subelement := range element.PaymentInformationList {
 				if strings.HasPrefix(subelement.Amount, "-") {
 					outflow = strings.Trim(subelement.Amount, "-")
@@ -69,10 +71,10 @@ func ExportNormalAccountToCSV(transactions []ubsApi.CashAccountTrxes, accountAli
 		} else {
 			if len(element.TransactionTextList) > 0 {
 				if len(element.PaymentInformationList) > 0 && len(element.PaymentInformationList[0].DescriptionList) > 0 {
-					if strings.Contains(element.PaymentInformationList[0].DescriptionList[0], "TWINT") || strings.Contains(element.TransactionTextList[0], "TWINT"){
-						if strings.HasPrefix(element.TrxAmount, "-"){
+					if strings.Contains(element.PaymentInformationList[0].DescriptionList[0], "TWINT") || strings.Contains(element.TransactionTextList[0], "TWINT") {
+						if strings.HasPrefix(element.TrxAmount, "-") {
 							payee = "Twint Zahlung"
-						}else{
+						} else {
 							payee = "Twint Einzahlung"
 						}
 
@@ -81,7 +83,7 @@ func ExportNormalAccountToCSV(transactions []ubsApi.CashAccountTrxes, accountAli
 						} else {
 							memo = element.PaymentInformationList[0].DescriptionList[0] + ", " + element.TransactionTextList[0]
 						}
-					}else {
+					} else {
 						payee = element.PaymentInformationList[0].DescriptionList[0]
 						memo = element.TransactionTextList[0]
 					}

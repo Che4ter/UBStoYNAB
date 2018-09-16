@@ -141,6 +141,7 @@ type AccountBalanceRequest struct {
 	Refresh     bool   `json:"refresh"`
 	Language    string `json:"language"`
 	StartDate   string `json:"startDate"`
+	EndDate     string `json:"endDate"`
 	RequestKey  string `json:"requestKey"`
 }
 
@@ -279,14 +280,11 @@ type CreditCardTransactionsResponse struct {
 	CurrencyCd                 string                          `json:"currencyCd"`
 	TotalCredits               string                          `json:"totalCredits"`
 	TotalDebits                string                          `json:"totalDebits"`
-	InvoiceAmount              string                          `json:"invoiceAmount"`
 	DocumentReferenceID        string                          `json:"documentReferenceId"`
-	PaymentMethod              string                          `json:"paymentMethod"`
 	Ebill                      bool                            `json:"ebill"`
 	HasPdf                     bool                            `json:"hasPdf"`
 	PaymentAllowed             bool                            `json:"paymentAllowed"`
 	AccountID                  string                          `json:"accountId"`
-	InvoiceID                  string                          `json:"invoiceId"`
 	AccountTransactions        []CreditCardAccountTransactions `json:"accountTransactions"`
 	CardTransactions           []CardTransactions              `json:"cardTransactions"`
 	HasMoreAccountTransactions bool                            `json:"hasMoreAccountTransactions"`

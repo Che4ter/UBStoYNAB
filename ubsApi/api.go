@@ -195,7 +195,7 @@ func GetAvailableAccounts() []CashAccounts {
 	return responseDTO.CashAccounts
 }
 
-func GetAccountTransactions(accountId string, numRecords int, startDate string) []CashAccountTrxes {
+func GetAccountTransactions(accountId string, numRecords int, startDate string, endDate string) []CashAccountTrxes {
 
 	requestURL := "/ClientWorkbenchSystem/MobileInterfaceAssetView/V1/MobileInterfaceAssetView/getCashAccountTrx"
 
@@ -203,7 +203,7 @@ func GetAccountTransactions(accountId string, numRecords int, startDate string) 
 		Jar: UBSCookieJar,
 	}
 
-	request := AccountBalanceRequest{accountId, 0, numRecords, true, false, "de", startDate, USBRequestKey}
+	request := AccountBalanceRequest{accountId, 0, numRecords, true, false, "de", startDate, endDate,USBRequestKey}
 
 	jsonString, err := json.Marshal(request)
 	if err != nil {
