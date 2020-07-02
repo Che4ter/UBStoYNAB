@@ -176,6 +176,7 @@ type CreditCardAccounts struct {
 	PrepayedCard           string `json:"prepayedCard"`
 	AccountReferenceNumber string `json:"accountReferenceNumber"`
 	SelfRegistered         bool   `json:"selfRegistered"`
+	Commercial             bool   `json:"commercial"`
 	ShuffledIconElements   []struct {
 		ProductType string `json:"productType"`
 		Status      string `json:"status"`
@@ -209,6 +210,7 @@ type CreditCardDetailsResponse struct {
 		StartDate                  string `json:"startDate"`
 		SpendingLimit              string `json:"spendingLimit"`
 		ID                         string `json:"id"`
+		EncryptedID                string `json:"encryptedId"`
 		Alias                      string `json:"alias"`
 		CurrencyCd                 string `json:"currencyCd"`
 		Balance                    string `json:"balance"`
@@ -220,6 +222,7 @@ type CreditCardDetailsResponse struct {
 		PrepayedCard               string `json:"prepayedCard"`
 		AccountReferenceNumber     string `json:"accountReferenceNumber"`
 		SelfRegistered             bool   `json:"selfRegistered"`
+		Commercial                 bool   `json:"commercial"`
 		ShuffledIconElements       []struct {
 			ProductType string `json:"productType"`
 			Status      string `json:"status"`
@@ -231,6 +234,7 @@ type CreditCardDetailsResponse struct {
 }
 
 type CreditCards struct {
+	Commercial             bool   `json:"commercial"`
 	NewUnseenInvoice       bool   `json:"newUnseenInvoice"`
 	HasInvoice             bool   `json:"hasInvoice"`
 	HasHistoricInvoice     bool   `json:"hasHistoricInvoice"`
@@ -240,6 +244,8 @@ type CreditCards struct {
 	ProductText            string `json:"productText"`
 	AccountReferenceNumber string `json:"accountReferenceNumber"`
 	ID                     string `json:"id"`
+	EncryptedID            string `json:"encryptedId"`
+	IsMainCard             bool   `json:"isMainCard"`
 	Alias                  string `json:"alias"`
 	CurrencyCd             string `json:"currencyCd"`
 	CardNumber             string `json:"cardNumber"`
@@ -301,6 +307,11 @@ type CardTransactions struct {
 	BookingDate          string `json:"bookingDate"`
 	TransactionText      string `json:"transactionText"`
 	MoreDetailsAvailable bool   `json:"moreDetailsAvailable"`
+	OriginalCurrency     string `json:"originalCurrency"`
+	OriginalValue        string `json:"originalValue"`
+	ProcessingFee        string `json:"processingFee"`
+	ExchangeRate         string `json:"exchangeRate"`
+	ExchangeDate         string `json:"exchangeDate"`
 	Alias                string `json:"alias"`
 	ProductText          string `json:"productText"`
 }
