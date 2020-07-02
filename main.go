@@ -14,6 +14,7 @@ import (
 func main() {
 	fmt.Println("Starte UBS E-Banking crawler...")
 	config := loadConfiguration()
+	ubsApi.LANG = config.Language
 
 	if login(config.ContractNumber) {
 		startDate := getStartDate()
@@ -111,4 +112,5 @@ func loadConfiguration() Configuration {
 
 type Configuration struct {
 	ContractNumber string
+	Language       string
 }
