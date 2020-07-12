@@ -17,6 +17,7 @@ import (
 const BASE_URL = "https://mobs-ch1.ubs.com"
 const SECOND_URL = "https://mokp-ch.ubs.com"
 
+var LANG = "en"
 var UBSCookies []*http.Cookie
 var UBSCookieJar *cookiejar.Jar
 var USBContractNumber string
@@ -44,7 +45,7 @@ func GetAuthenticatorChallenge(contractNumber string) string {
 	v := url.Values{}
 	v.Set("isiwebmethod", "authenticate")
 	v.Set("isiwebuserid", USBContractNumber)
-	v.Set("isiwebargs", "login&language=de&_="+strconv.FormatInt(NowAsUnixMilli(), 10))
+	v.Set("isiwebargs", fmt.Sprintf("login&language=%s&_=%s", LANG, strconv.FormatInt(NowAsUnixMilli(), 10)))
 
 	req, err := http.NewRequest("POST", BASE_URL+requestURL, bytes.NewBufferString(v.Encode()))
 	req.Header.Add("cookie", "NavLB_MOBS=mobs-ch1.ubs.com; bzelang=en-DE; Navajo=")
@@ -110,7 +111,7 @@ func SendAuthenticatorChallengeResponse(response1 string, response2 string, resp
 	v.Set("response3", response3)
 	v.Set("response4", response4)
 
-	v.Set("isiwebargs", "login&language=de&_="+strconv.FormatInt(NowAsUnixMilli(), 10))
+	v.Set("isiwebargs", fmt.Sprintf("login&language=%s&_=%s", LANG, strconv.FormatInt(NowAsUnixMilli(), 10)))
 
 	req, err := http.NewRequest("POST", BASE_URL+requestURL, bytes.NewBufferString(v.Encode()))
 	req.Header.Add("cookie", "NavLB_MOBS=mobs-ch1.ubs.com; bzelang=en-DE;")
@@ -158,7 +159,7 @@ func GetAvailableAccounts() []CashAccounts {
 		Jar: UBSCookieJar,
 	}
 
-	request := GetAccountsRequest{0, 30, "alias", "de", USBRequestKey}
+	request := GetAccountsRequest{0, 30, "alias", LANG, USBRequestKey}
 
 	jsonString, err := json.Marshal(request)
 	if err != nil {
@@ -203,7 +204,7 @@ func GetAccountTransactions(accountId string, numRecords int, startDate string, 
 		Jar: UBSCookieJar,
 	}
 
-	request := AccountBalanceRequest{accountId, 0, numRecords, true, false, "de", startDate, endDate,USBRequestKey}
+	request := AccountBalanceRequest{accountId, 0, numRecords, true, false, LANG, startDate, endDate,USBRequestKey}
 
 	jsonString, err := json.Marshal(request)
 	if err != nil {
@@ -248,7 +249,7 @@ func GetAvailableCreditCardAccounts() []CreditCardAccounts {
 		Jar: UBSCookieJar,
 	}
 
-	request := CreditCardOverviewRequest{false, 0, 15, "de", USBRequestKey}
+	request := CreditCardOverviewRequest{false, 0, 15, LANG, USBRequestKey}
 
 	jsonString, err := json.Marshal(request)
 	if err != nil {
@@ -292,7 +293,7 @@ func GetAvailableCreditCards(accountId string) []CreditCards {
 		Jar: UBSCookieJar,
 	}
 
-	request := CreditCardDetailsRequest{accountId, 0, 15, false, "de", USBRequestKey}
+	request := CreditCardDetailsRequest{accountId, 0, 15, false, LANG, USBRequestKey}
 
 	jsonString, err := json.Marshal(request)
 	if err != nil {
@@ -341,7 +342,7 @@ func GetCardTransactions(accountId string, numRecords int, startDate string, end
 	var creditCardTransactions []CardTransactions
 	var accountTransactions []CreditCardAccountTransactions
 	for hasMore {
-		request := CreditCardTransactionsRequest{accountId, "CHF", startDate, endDate, 0, 150, 0, 150, false, "de", USBRequestKey}
+		request := CreditCardTransactionsRequest{accountId, "CHF", startDate, endDate, 0, 150, 0, 150, false, LANG, USBRequestKey}
 
 		jsonString, err := json.Marshal(request)
 		if err != nil {
@@ -394,7 +395,7 @@ func PingRequest(contractNumber string) {
 
 	v := url.Values{}
 	v.Set("isiwebuserid", contractNumber)
-	v.Set("language", "de")
+	v.Set("language", LANG)
 
 	s := v.Encode()
 	fmt.Printf("v.Encode(): %v\n", s)
